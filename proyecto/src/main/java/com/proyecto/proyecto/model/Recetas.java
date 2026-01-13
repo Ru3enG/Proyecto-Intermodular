@@ -1,10 +1,11 @@
 package com.proyecto.proyecto.model;
 
-import org.attoparser.dom.Text;
-
 import jakarta.persistence.Entity;
-import jakarta.persistence.JoinColumn;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.JoinColumn;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -17,17 +18,17 @@ import lombok.Setter;
 @Entity
 public class Recetas {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
-    @ManyToOne
-    @JoinColumn(unique = true)
-    private Long id_usuario;
 
     private String nombre;
 
-    private Text ingredientes;
+    private String ingredientes;
 
-    private Text instrucciones;
-    
+    private String instrucciones;
 
+    @ManyToOne
+    @JoinColumn(name = "usuario_id")
+    private Usuario usuario;
 }
