@@ -21,8 +21,9 @@ public class UsuarioDTO {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long nºusuario;
-    private String nombreUsuario;
-    private String contraseña;
+    private String username;
+    private String password;
+    private String rol;
     private LocalDate fechaNacimiento;
 
     public void Edad(){
