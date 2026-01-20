@@ -22,7 +22,7 @@ import lombok.Setter;
 public class Usuario {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long nºusuario;
+    private Long id;
     private String username;
     private String password;
     private String rol;

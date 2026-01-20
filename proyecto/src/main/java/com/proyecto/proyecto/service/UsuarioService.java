@@ -29,13 +29,16 @@ public class UsuarioService {
         usuarioRepository.save(usuario);
     }
 
+
+    
     public Usuario dtoToEntity(UsuarioDTO dto){
         return new Usuario
         (
-            dto.nºusuario(),
-            dto.username(),
+            dto.getId(),
+            dto.getUsername(),
             dto.getPassword(),
-            dto.getRol()
+            dto.getRol(),
+            dto.getFechaNacimiento()
         );
     }
 }

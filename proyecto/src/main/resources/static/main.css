@@ -1,0 +1,48 @@
+body{
+    background-color: #c9dae6;
+}
+*{
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+.imagen1,.imagen2,.imagen3{
+    width: 70px;
+    height: 70px;
+    padding: auto;
+}
+.imagen1,.imagen2{
+    text-align: left;
+    display: grid;
+    margin-left: 0;
+    margin-right: auto;
+}
+.imagen1{
+    grid-area: im;
+}
+.imagen2{
+    grid-area: im2;
+}
+.imagen3{
+    text-align: right;
+    display: grid;
+    grid-area: im3;
+    margin-left: auto;
+    margin-right: 0;
+}
+.imagenes{
+    background-color: rgb(18, 87, 143);
+    margin: 0px;
+    padding: 0px;
+    width: auto;
+    height: auto;
+    display: grid;
+    grid-template-columns: 1fr,1fr,3fr;
+    grid-template-rows: auto;
+    grid-template-areas: 
+    "im im2 im3";
+}
+.log{
+    display: block;
+    text-align: center;
+}
