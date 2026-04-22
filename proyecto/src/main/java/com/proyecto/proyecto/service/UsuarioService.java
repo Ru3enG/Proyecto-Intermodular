@@ -1,17 +1,17 @@
 package com.proyecto.proyecto.service;
 
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.stereotype.Service;
 
 import com.proyecto.proyecto.dto.UsuarioDTO;
 import com.proyecto.proyecto.model.Usuario;
 import com.proyecto.proyecto.repository.UsuarioRepository;
 
 import jakarta.transaction.Transactional;
-
+@Service
 public class UsuarioService {
 
 
-    
     private final PasswordEncoder passwordEncoder;
 
     private UsuarioRepository usuarioRepository;
@@ -30,7 +30,6 @@ public class UsuarioService {
     }
 
 
-    
     public Usuario dtoToEntity(UsuarioDTO dto){
         return new Usuario
         (
@@ -38,7 +37,8 @@ public class UsuarioService {
             dto.getUsername(),
             dto.getPassword(),
             dto.getRol(),
-            dto.getFechaNacimiento()
+            dto.getFechaNacimiento(),
+            dto.getEmail()
         );
     }
 }

@@ -1,7 +1,5 @@
 package com.proyecto.proyecto.dto;
 
-import java.time.LocalDate;
-
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -12,12 +10,7 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 
-public class UsuarioDTO {
-
+public class RankingDTO {
     private Long id;
-    private String username;
-    private String password;
-    private String rol;
-    private LocalDate fechaNacimiento;
-    private String email;
+    private String rankingName;
 }
