@@ -30,16 +30,19 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) {
         http
+                .csrf(csrf -> csrf
+                    .ignoringRequestMatchers("/api/**")
+                )
                 .formLogin(login -> login
                         .loginPage("/login")
-                        .defaultSuccessUrl("/welcome")
+                        .defaultSuccessUrl("/principal", true)
                         .permitAll())
                 .logout(logout -> logout
                         .logoutUrl("/logout")
                         .logoutSuccessUrl("/login"))
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/login", "/registro").permitAll()
-                        .requestMatchers("/welcome").hasAnyRole("USER", "ADMIN")
+                        .requestMatchers("/login", "/registro","/principal").permitAll()
+                        .requestMatchers("/recetas").hasAnyRole("USER", "ADMIN")
                         .requestMatchers("/admin").hasRole("ADMIN")
                         .anyRequest().authenticated());
         return http.build();

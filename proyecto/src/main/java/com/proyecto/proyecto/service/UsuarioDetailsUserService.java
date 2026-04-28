@@ -30,6 +30,7 @@ public class UsuarioDetailsUserService implements UserDetailsService {
         return User
                 .withUsername(username)
                 .password(u.getPassword())
+                .roles(u.getRol())
                 .build();
     }
 }

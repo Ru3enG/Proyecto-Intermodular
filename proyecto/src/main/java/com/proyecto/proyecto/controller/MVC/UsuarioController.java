@@ -1,4 +1,4 @@
-package com.proyecto.proyecto.controller.REST;
+package com.proyecto.proyecto.controller.MVC;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -20,14 +20,14 @@ public class UsuarioController {
     }
 
     @GetMapping("/registro")
-    public String registro(Model model) {
-        model.addAttribute("d", new UsuarioDTO());
+    public String registrar(Model model) {
+        model.addAttribute("u", new UsuarioDTO());
         return "registro";
     }
 
     @PostMapping("/registro")
-    public String registro(@Valid @ModelAttribute UsuarioDTO dto) {
-        usuarioService.registrar(dto);
+    public String registrar(@Valid @ModelAttribute UsuarioDTO dto) {
+        usuarioService.registrarUsuario(dto);
         return "login";
     }
 

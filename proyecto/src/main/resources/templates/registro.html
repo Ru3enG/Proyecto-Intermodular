@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registrar</title>
+</head>
+<body>
+    <h1>REGISTRO</h1>
+    <form th:action="@{/registro}" method="post" th:object="${u}">
+        <label>Usuario</label>
+        <input type="text" th:field="*{username}">
+
+        <label>Email</label>
+        <input type="email" th:field="*{email}">
+
+        <label>Contraseña</label>
+        <input type="password" th:field="*{password}">
+
+        <label>Fecha de Nacimiento</label>
+        <input type="date" th:field="*{fechaNacimiento}">
+
+        <button type="submit">Registrarse</button>
+    </form>
+</body>
+</html>

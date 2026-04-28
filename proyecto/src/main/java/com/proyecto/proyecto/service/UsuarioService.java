@@ -1,9 +1,12 @@
 package com.proyecto.proyecto.service;
 
+import java.util.Optional;
+
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.proyecto.proyecto.dto.UsuarioDTO;
+import com.proyecto.proyecto.exception.ConflictoException;
 import com.proyecto.proyecto.model.Usuario;
 import com.proyecto.proyecto.repository.UsuarioRepository;
 
@@ -22,10 +25,14 @@ public class UsuarioService {
     }
 
     @Transactional
-    public void registrar(UsuarioDTO dto){
+    public void registrarUsuario(UsuarioDTO dto){
         Usuario usuario = dtoToEntity(dto);
-        usuario.setRol(dto.getRol());
+        usuario.setRol("USER");
         usuario.setPassword(passwordEncoder.encode(dto.getPassword()));
+        Optional<Usuario> opt = usuarioRepository.findByUsername(dto.getUsername());
+        if (opt.isPresent()) {
+            throw new ConflictoException("El usuario ya existe");
+        }
         usuarioRepository.save(usuario);
     }
 
