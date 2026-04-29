@@ -1,0 +1,43 @@
+body{
+    background-color: #c9dae6;
+}
+*{
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+.imagenes {
+    background-color: rgb(18, 87, 143);
+    width: 100%;
+    padding: 5px 15px;
+    display: flex;
+    align-items: center;
+}
+
+.imagen1 {
+    margin-right: auto; 
+}
+
+.imagen2, .imagen3 {
+    width: 70px;
+    height: 70px;
+    margin-left: 10px;
+}
+
+.imagen1, .imagen2, .imagen3 {
+    width: 70px;
+    height: 70px;
+}
+.pie{
+    display: inline-block;
+    margin-top:25px;
+    width:100%;
+    padding:10px;
+    background:#360c04;
+    color:white;
+    border:none;
+    border-radius:4px;
+    cursor:pointer;
+    text-align: center;
+    text-decoration: none;
+}

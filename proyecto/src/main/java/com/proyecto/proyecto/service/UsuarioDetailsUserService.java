@@ -19,16 +19,19 @@ public class UsuarioDetailsUserService implements UserDetailsService {
         this.usuarioRepository=usuarioRepository;
     }
 
-    @Override
+@Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 
         Optional<Usuario> opt = usuarioRepository.findByUsername(username);
-        if (opt.isEmpty())
-            throw new RecursoNoEncontradoException("No se a encontrado el usuario " + username);
+
+        if (opt.isEmpty()) {
+            throw new UsernameNotFoundException("Usuario no encontrado: " + username);
+        }
 
         Usuario u = opt.get();
+
         return User
-                .withUsername(username)
+                .withUsername(u.getUsername())
                 .password(u.getPassword())
                 .roles(u.getRol())
                 .build();
