@@ -8,7 +8,6 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
-import com.proyecto.proyecto.exception.RecursoNoEncontradoException;
 import com.proyecto.proyecto.model.Usuario;
 import com.proyecto.proyecto.repository.UsuarioRepository;
 @Service

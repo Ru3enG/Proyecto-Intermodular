@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title th:text="${receta.recetaNombre}">Detalle receta</title>
+    <link rel="stylesheet" th:href="@{/css/recetas.css}">
+</head>
+<body>
+
+    <div th:replace="~{navbar :: navbar}"></div>
+
+    <div class="contenido">
+
+        <h1 th:text="${receta.recetaNombre}">Nombre receta</h1>
+
+        <div class="meta-receta">
+            <p class="autor">Receta de <strong th:text="${receta.usuario.username}">usuario</strong></p>
+            <span class="badge" th:text="${receta.ranking.rankingName}">ranking</span>
+        </div>
+
+        <div class="seccion">
+            <h2>Ingredientes</h2>
+            <p th:text="${receta.ingredientes}" class="texto-pre">ingredientes</p>
+        </div>
+
+        <div class="seccion">
+            <h2>Pasos a seguir</h2>
+            <p th:text="${receta.pasos}" class="texto-pre">pasos</p>
+        </div>
+
+        <!-- puntuacion solo si no eres el autor -->
+        <div class="seccion" th:if="${!esAutor}">
+            <h2>Puntuar receta</h2>
+            <div th:if="${yaVoto}">
+                <p class="exito">Ya has puntuado esta receta</p>
+            </div>
+            <div th:if="${!yaVoto}">
+                <form th:action="@{/recetas/{id}/puntuar(id=${receta.id})}" method="post">
+                    <label>Puntuación (1-10)</label>
+                    <input type="number" name="puntos" min="1" max="10" required>
+                    <button type="submit">Puntuar</button>
+                </form>
+            </div>
+        </div>
+
+        <!-- comentarios -->
+        <div class="seccion">
+            <h2>Comentarios</h2>
+            <div class="lista-comentarios">
+                <div class="comentario" th:each="c : ${comentarios}">
+                    <span class="comentario-usuario" th:text="${c.usuario.username}">usuario</span>
+                    <p class="comentario-texto" th:text="${c.texto}">texto</p>
+                </div>
+                <p th:if="${#lists.isEmpty(comentarios)}">No hay comentarios todavía.</p>
+            </div>
+            <form th:action="@{/recetas/{id}/comentar(id=${receta.id})}" method="post" class="form-comentario">
+                <textarea name="texto" rows="3" placeholder="Escribe un comentario..." required></textarea>
+                <button type="submit">Comentar</button>
+            </form>
+        </div>
+
+    </div>
+
+</body>
+</html>

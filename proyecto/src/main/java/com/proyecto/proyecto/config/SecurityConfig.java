@@ -10,7 +10,6 @@ import org.springframework.security.web.SecurityFilterChain;
 
 @Configuration
 @EnableWebSecurity
-
 public class SecurityConfig {
 
     @Bean
@@ -19,7 +18,7 @@ public class SecurityConfig {
     }
 
     @Bean
-    public SecurityFilterChain securityFilterChain(HttpSecurity http) {
+    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
                 .csrf(csrf -> csrf
                         .ignoringRequestMatchers("/api/**"))
@@ -28,16 +27,17 @@ public class SecurityConfig {
                         .loginPage("/login")
                         .defaultSuccessUrl("/principal", true)
                         .permitAll())
+
                 .logout(logout -> logout
                         .logoutUrl("/logout")
                         .logoutSuccessUrl("/login"))
+
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/api/auth/login").permitAll()
-                        .requestMatchers("/login").permitAll()
-                        .requestMatchers("/principal").permitAll()
-                        .requestMatchers("/registro").permitAll()
-                        .requestMatchers("/admin").permitAll()
-                        .anyRequest().authenticated());
+                        .requestMatchers("/css/**", "/js/**", "/images/**").permitAll()
+                        .requestMatchers("/login", "/registro").permitAll()
+                        .requestMatchers("/admin/**").hasRole("ADMIN")
+                        .anyRequest().hasAnyRole("USER", "ADMIN"));
+
         return http.build();
     }
 }

@@ -1,26 +1,42 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Registrar</title>
+    <title>Registro</title>
+    <link rel="stylesheet" th:href="@{/css/registro.css}">
 </head>
 <body>
-    <h1>REGISTRO</h1>
-    <form th:action="@{/registro}" method="post" th:object="${u}">
-        <label>Usuario</label>
-        <input type="text" th:field="*{username}">
 
-        <label>Email</label>
-        <input type="email" th:field="*{email}">
+    <div class="registro-wrapper">
 
-        <label>Contraseña</label>
-        <input type="password" th:field="*{password}">
+        <div class="logo-box">
+            <img th:src="@{/images/logoPrincipal.png}" alt="Logo" class="logo-img">
+        </div>
 
-        <label>Fecha de Nacimiento</label>
-        <input type="date" th:field="*{fechaNacimiento}">
+        <div class="registro-card">
+            <h2>Crear cuenta</h2>
 
-        <button type="submit">Registrarse</button>
-    </form>
+            <form th:action="@{/registro}" method="post" th:object="${u}">
+
+                <label>Usuario</label>
+                <input type="text" th:field="*{username}" required>
+
+                <label>Email</label>
+                <input type="email" th:field="*{email}" required>
+
+                <label>Contraseña</label>
+                <input type="password" th:field="*{password}" required>
+
+                <label>Fecha de nacimiento</label>
+                <input type="date" th:field="*{fechaNacimiento}" required>
+
+                <button type="submit">Registrarse</button>
+            </form>
+
+            <p class="login-link">¿Ya tienes cuenta? <a th:href="@{/login}">Inicia sesión</a></p>
+        </div>
+
+    </div>
+
 </body>
 </html>

@@ -13,7 +13,7 @@ body {
     justify-content: center;
 }
 
-.login-wrapper {
+.registro-wrapper {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -26,12 +26,12 @@ body {
     object-fit: contain;
 }
 
-.login-card {
+.registro-card {
     background-color: white;
     border: 1px solid #c4c9d4;
     border-radius: 8px;
     padding: 35px 40px;
-    width: 380px;
+    width: 420px;
     display: flex;
     flex-direction: column;
     gap: 15px;
@@ -56,7 +56,9 @@ label {
 }
 
 input[type="text"],
-input[type="password"] {
+input[type="email"],
+input[type="password"],
+input[type="date"] {
     padding: 9px 12px;
     border: 1px solid #ccc;
     border-radius: 4px;
@@ -85,29 +87,17 @@ button:hover {
     background-color: #c9662c;
 }
 
-.error {
-    color: red;
-    font-size: 13px;
-    text-align: center;
-}
-
-.exito {
-    color: green;
-    font-size: 13px;
-    text-align: center;
-}
-
-.registro-link {
+.login-link {
     text-align: center;
     font-size: 13px;
     color: #555;
 }
 
-.registro-link a {
+.login-link a {
     color: #1a4a7a;
     text-decoration: none;
 }
 
-.registro-link a:hover {
+.login-link a:hover {
     text-decoration: underline;
 }

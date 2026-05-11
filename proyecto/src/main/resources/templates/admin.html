@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Admin</title>
+    <link rel="stylesheet" th:href="@{/css/admin.css}">
+</head>
+<body>
+
+    <h1>Panel de administración</h1>
+
+    <!-- RANKINGS -->
+    <div class="seccion">
+        <h2>Rankings</h2>
+
+        <form th:action="@{/admin/ranking/crear}" method="post" th:object="${nuevoRanking}">
+            <input type="text" th:field="*{rankingName}" placeholder="Nombre del ranking" required>
+            <button type="submit">Crear ranking</button>
+        </form>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Nombre</th>
+                    <th>Acción</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="ranking : ${rankings}">
+                    <td th:text="${ranking.id}">1</td>
+                    <td th:text="${ranking.rankingName}">Nombre</td>
+                    <td>
+                        <form th:action="@{/admin/ranking/eliminar/{id}(id=${ranking.id})}" method="post">
+                            <button type="submit">Eliminar</button>
+                        </form>
+                    </td>
+                </tr>
+                <tr th:if="${#lists.isEmpty(rankings)}">
+                    <td colspan="3">No hay rankings todavía</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <!-- USUARIOS -->
+    <div class="seccion">
+        <h2>Usuarios</h2>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Username</th>
+                    <th>Email</th>
+                    <th>Rol</th>
+                    <th>Eliminar</th>
+                    <th>Cambiar contraseña</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="usuario : ${usuarios}">
+                    <td th:text="${usuario.id}">1</td>
+                    <td th:text="${usuario.username}">usuario</td>
+                    <td th:text="${usuario.email}">email</td>
+                    <td th:text="${usuario.rol}">USER</td>
+                    <td>
+                        <form th:action="@{/admin/usuario/eliminar/{id}(id=${usuario.id})}" method="post">
+                            <button type="submit">Eliminar</button>
+                        </form>
+                    </td>
+                    <td>
+                        <form th:action="@{/admin/usuario/password/{id}(id=${usuario.id})}" method="post">
+                            <input type="text" name="passwordTemporal" placeholder="Nueva contraseña" required>
+                            <button type="submit">Cambiar</button>
+                        </form>
+                    </td>
+                </tr>
+                <tr th:if="${#lists.isEmpty(usuarios)}">
+                    <td colspan="6">No hay usuarios todavía</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <!-- POSICIONES -->
+    <div class="seccion">
+        <h2>Posiciones en rankings</h2>
+
+        <!-- formulario para añadir usuario a ranking -->
+        <form th:action="@{/admin/posicion/añadir}" method="post" class="form-añadir">
+            <select name="usuarioId" required>
+                <option value="">Elige usuario...</option>
+                <option th:each="u : ${usuarios}" th:value="${u.id}" th:text="${u.username}">usuario</option>
+            </select>
+            <select name="rankingId" required>
+                <option value="">Elige ranking...</option>
+                <option th:each="r : ${rankings}" th:value="${r.id}" th:text="${r.rankingName}">ranking</option>
+            </select>
+            <button type="submit">Añadir</button>
+        </form>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>Usuario</th>
+                    <th>Ranking</th>
+                    <th>Puntuación</th>
+                    <th>Acción</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="pos : ${posiciones}">
+                    <td th:text="${pos.usuario.username}">usuario</td>
+                    <td th:text="${pos.ranking.rankingName}">ranking</td>
+                    <td th:text="${pos.puntuacion}">0</td>
+                    <td>
+                        <form th:action="@{/admin/posicion/eliminar/{id}(id=${pos.id})}" method="post">
+                            <button type="submit">Eliminar</button>
+                        </form>
+                    </td>
+                </tr>
+                <tr th:if="${#lists.isEmpty(posiciones)}">
+                    <td colspan="4">No hay posiciones todavía</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+</body>
+</html>

@@ -1,20 +1,107 @@
 <!DOCTYPE html>
-<html lang="en">
-
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <link rel="stylesheet" href="/css/principal.css">
-    <style>
-        @import url(../css/plantilla.css);
-    </style>
-
+    <title>Principal</title>
+    <link rel="stylesheet" th:href="@{/css/principal.css}">
 </head>
-
 <body>
-    <div class="imagenes">
-        <img src="/imagenes/LogoPrincipal.png" class="imagen1">
-        <a href="Main.html"><img src="../static/images/Inicio.png" class="imagen2"></a>
-        <a href="principal.html"><img src="/imagenes/pagina-de-inicio.png" class="imagen3"></a>
+
+    <div th:replace="~{navbar :: navbar}"></div>
+
+    <div class="contenido">
+
+        <h1>Rankings</h1>
+
+        <div th:if="${not #lists.isEmpty(rankings)}">
+
+            <div class="pergamino-wrapper">
+
+                <!-- flecha ranking anterior (izquierda) -->
+                <a class="flecha flecha-lateral" th:data-href="@{/principal(idx=${indiceAnterior}, pagina=0)}">&#8592;</a>
+
+                <div class="columna-central">
+
+                    <!-- flecha pagina anterior (arriba) -->
+                    <a class="flecha flecha-vertical"
+                       th:classappend="${totalPaginas == 1} ? 'oculta'"
+                       th:data-href="@{/principal(idx=${indiceActual}, pagina=${paginaAnterior})}">&#8593;</a>
+
+                    <!-- pergamino -->
+                    <div class="pergamino" id="pergamino">
+                        <table class="ranking-tabla">
+                            <thead>
+                                <tr>
+                                    <td colspan="3" class="titulo-ranking"
+                                        th:text="${rankings[indiceActual].rankingName}">Nombre</td>
+                                </tr>
+                                <tr>
+                                    <th>Posición</th>
+                                    <th>Usuario</th>
+                                    <th>Puntuación</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr th:each="pos, j : ${posiciones}">
+                                    <!-- offset para mostrar la posicion real -->
+                                    <td th:text="${offset + j.count}">1</td>
+                                    <td th:text="${pos.usuario.username}">usuario</td>
+                                    <td th:text="${pos.puntuacion}">0</td>
+                                </tr>
+                                <tr th:if="${#lists.isEmpty(posiciones)}">
+                                    <td colspan="3">No hay jugadores todavía</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <!-- flecha pagina siguiente (abajo) -->
+                    <a class="flecha flecha-vertical"
+                       th:classappend="${totalPaginas == 1} ? 'oculta'"
+                       th:data-href="@{/principal(idx=${indiceActual}, pagina=${paginaSiguiente})}">&#8595;</a>
+
+                    <!-- indicadores -->
+                    <p class="indicador">
+                        Ranking <span th:text="${indiceActual + 1}">1</span> / <span th:text="${#lists.size(rankings)}">1</span>
+                        <span th:if="${totalPaginas > 1}">
+                            &nbsp;·&nbsp; Página <span th:text="${pagina + 1}">1</span> / <span th:text="${totalPaginas}">1</span>
+                        </span>
+                    </p>
+
+                </div>
+
+                <!-- flecha ranking siguiente (derecha) -->
+                <a class="flecha flecha-lateral" th:data-href="@{/principal(idx=${indiceSiguiente}, pagina=0)}">&#8594;</a>
+
+            </div>
+
+        </div>
     </div>
+
+    <script>
+        // animacion de enrollar y desenrollar el pergamino al cambiar
+        document.querySelectorAll('.flecha').forEach(function(flecha) {
+            flecha.addEventListener('click', function(e) {
+                e.preventDefault();
+                var url = this.getAttribute('data-href');
+                var pergamino = document.getElementById('pergamino');
+
+                // animacion de cierre
+                pergamino.classList.add('enrollando');
+
+                // cuando termina la animacion navegamos a la url
+                setTimeout(function() {
+                    window.location.href = url;
+                }, 800);
+            });
+        });
+
+        // animacion de apertura al cargar la pagina
+        window.addEventListener('load', function() {
+            var pergamino = document.getElementById('pergamino');
+            pergamino.classList.add('desenrollando');
+        });
+    </script>
+
+</body>
+</html>

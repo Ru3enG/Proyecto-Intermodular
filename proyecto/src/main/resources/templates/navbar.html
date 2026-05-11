@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<body>
+
+<nav th:fragment="navbar">
+    <div class="navbar">
+        <div class="navbar-logo">
+            <a th:href="@{/principal}">
+                <img th:src="@{/images/logoPrincipal.png}" alt="Logo" class="logo-img">
+            </a>
+        </div>
+
+        <div class="navbar-iconos">
+            <a th:href="@{/principal}" class="nav-link">Inicio</a>
+            <a th:href="@{/recetas}" class="nav-link">Recetas</a>
+            <a th:href="@{/opciones}">
+                <img th:src="@{/images/Inicio.png}" alt="Perfil" class="icono-img">
+            </a>
+        </div>
+    </div>
+</nav>
+
+</body>
+</html>

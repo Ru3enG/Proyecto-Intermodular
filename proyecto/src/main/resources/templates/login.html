@@ -1,33 +1,41 @@
 <!DOCTYPE html>
-<html lang="en">
-
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <link rel="stylesheet" href="/css/principal.css">
-    <style>
-        @import url(../css/plantilla.css);
-    </style>
-
+    <title>Login</title>
+    <link rel="stylesheet" th:href="@{/css/login.css}">
 </head>
-
 <body>
-    <div class="imagenes">
-        <img src="/imagenes/LogoPrincipal.png" class="imagen1">
-        <a href="Main.html"><img src="../static/images/Inicio.png" class="imagen2"></a>
-        <a href="principal.html"><img src="/imagenes/pagina-de-inicio.png" class="imagen3"></a>
-    </div>
-    <div class="log">
-        <h1>Iniciar Sesión</h1>
-        <form th:action="@{/login}" method="post">
-            <label>Usuario</label>
-            <input type="text" name="username">
 
-            <label>Contraseña</label>
-            <input type="password" name="password">
+    <div class="login-wrapper">
 
-            <button type="submit">Iniciar Sesión</button>
-        </form>
+        <!-- logo arriba -->
+        <div class="logo-box">
+            <img th:src="@{/images/logoPrincipal.png}" alt="Logo" class="logo-img">
+        </div>
+
+        <div class="login-card">
+            <h2>Iniciar sesión</h2>
+
+            <!-- mensaje de error si las credenciales son incorrectas -->
+            <p class="error" th:if="${param.error}">Usuario o contraseña incorrectos</p>
+            <!-- mensaje si se ha cerrado sesion -->
+            <p class="exito" th:if="${param.logout}">Sesión cerrada correctamente</p>
+
+            <form th:action="@{/login}" method="post">
+                <label>Usuario</label>
+                <input type="text" name="username" required>
+
+                <label>Contraseña</label>
+                <input type="password" name="password" required>
+
+                <button type="submit">Entrar</button>
+            </form>
+
+            <p class="registro-link">¿No tienes cuenta? <a th:href="@{/registro}">Regístrate</a></p>
+        </div>
+
     </div>
+
 </body>
+</html>
