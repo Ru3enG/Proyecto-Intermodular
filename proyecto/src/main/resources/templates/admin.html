@@ -4,8 +4,11 @@
     <meta charset="UTF-8">
     <title>Admin</title>
     <link rel="stylesheet" th:href="@{/css/admin.css}">
+    <link rel="stylesheet" th:href="@{/css/footer.css}">
 </head>
 <body>
+
+    <div th:replace="~{navbar :: navbar}"></div>
 
     <h1>Panel de administración</h1>
 
@@ -126,6 +129,8 @@
             </tbody>
         </table>
     </div>
+
+    <div th:replace="~{navbar :: footer}"></div>
 
 </body>
 </html>

@@ -33,9 +33,13 @@ public class UsuarioService {
         this.posicionRepository = posicionRepository;
     }
 
-    // devuelve todos los usuarios
     public List<Usuario> getTodos() {
         return usuarioRepository.findAll();
+    }
+
+    public Usuario getByUsername(String username) {
+        return usuarioRepository.findByUsername(username)
+                .orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
     }
 
     @Transactional

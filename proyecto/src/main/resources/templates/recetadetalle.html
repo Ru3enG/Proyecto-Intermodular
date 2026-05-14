@@ -4,13 +4,14 @@
     <meta charset="UTF-8">
     <title th:text="${receta.recetaNombre}">Detalle receta</title>
     <link rel="stylesheet" th:href="@{/css/recetas.css}">
+    <link rel="stylesheet" th:href="@{/css/footer.css}">
 </head>
 <body>
 
     <div th:replace="~{navbar :: navbar}"></div>
 
     <div class="contenido">
-
+        <!-- detalles -->
         <h1 th:text="${receta.recetaNombre}">Nombre receta</h1>
 
         <div class="meta-receta">
@@ -28,7 +29,7 @@
             <p th:text="${receta.pasos}" class="texto-pre">pasos</p>
         </div>
 
-        <!-- puntuacion solo si no eres el autor -->
+        <!-- puntuar si no eres el creador-->
         <div class="seccion" th:if="${!esAutor}">
             <h2>Puntuar receta</h2>
             <div th:if="${yaVoto}">
@@ -60,6 +61,8 @@
         </div>
 
     </div>
+
+    <div th:replace="~{navbar :: footer}"></div>
 
 </body>
 </html>

@@ -33,7 +33,7 @@ public class PuntuacionRecetaService {
     }
 
     @Transactional
-    public String puntuar(Long recetaId, Integer puntos, String username) {
+    public void puntuar(Long recetaId, Integer puntos, String username) {
 
         Usuario usuario = usuarioRepository.findByUsername(username)
                 .orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
@@ -41,31 +41,20 @@ public class PuntuacionRecetaService {
         Receta receta = recetaRepository.findById(recetaId)
                 .orElseThrow(() -> new RuntimeException("Receta no encontrada"));
 
-        // no puedes puntuar tu propia receta
-        if (receta.getUsuario().getId().equals(usuario.getId())) {
-            return "No puedes puntuar tu propia receta";
-        }
+        if (receta.getUsuario().getId().equals(usuario.getId())) return;
 
-        // compruebo que no haya puntuado ya esta receta
         Optional<PuntuacionReceta> yaVoto = puntuacionRecetaRepository
                 .findByUsuarioIdAndRecetaId(usuario.getId(), recetaId);
-        if (yaVoto.isPresent()) {
-            return "Ya has puntuado esta receta";
-        }
+        if (yaVoto.isPresent()) return;
 
-        // validacion de puntuacion entre 1 y 10
-        if (puntos < 1 || puntos > 10) {
-            return "La puntuación debe ser entre 1 y 10";
-        }
+        if (puntos < 1 || puntos > 10) return;
 
-        // guardo la puntuacion
         PuntuacionReceta puntuacion = new PuntuacionReceta();
         puntuacion.setUsuario(usuario);
         puntuacion.setReceta(receta);
         puntuacion.setPuntos(puntos);
         puntuacionRecetaRepository.save(puntuacion);
 
-        // sumo los puntos al autor de la receta en el ranking de esa receta
         Optional<Posicion> posicionOpt = posicionRepository
                 .findByUsuarioIdAndRankingId(receta.getUsuario().getId(), receta.getRanking().getId());
 
@@ -74,8 +63,6 @@ public class PuntuacionRecetaService {
             posicion.setPuntuacion(posicion.getPuntuacion() + puntos);
             posicionRepository.save(posicion);
         }
-
-        return "ok";
     }
 
     // comprueba si un usuario ya puntuo una receta (para el html)

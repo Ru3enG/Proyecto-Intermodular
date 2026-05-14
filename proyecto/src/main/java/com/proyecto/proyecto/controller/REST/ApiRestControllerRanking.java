@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import com.proyecto.proyecto.exception.RecursoNoEncontradoException;
 import com.proyecto.proyecto.model.Ranking;
 import com.proyecto.proyecto.repository.RankingRepository;
 
@@ -42,7 +43,7 @@ public class ApiRestControllerRanking {
     @GetMapping("{id}")
     public ResponseEntity<Ranking> obtenerPorId(@PathVariable Long id) {
         Ranking ranking = rankingRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Ranking no encontrado"));
+                .orElseThrow(() -> new RecursoNoEncontradoException("Ranking no encontrado"));
         return ResponseEntity.ok(ranking);
     }
 
@@ -62,7 +63,7 @@ public class ApiRestControllerRanking {
     @PutMapping("{id}")
     public ResponseEntity<Ranking> actualizar(@PathVariable Long id, @Valid @RequestBody Ranking ranking) {
         Ranking existente = rankingRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Ranking no encontrado"));
+                .orElseThrow(() -> new RecursoNoEncontradoException("Ranking no encontrado"));
         existente.setRankingName(ranking.getRankingName());
         Ranking actualizado = rankingRepository.save(existente);
         return ResponseEntity.ok(actualizado);

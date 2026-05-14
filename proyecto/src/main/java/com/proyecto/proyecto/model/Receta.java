@@ -34,7 +34,6 @@ public class Receta {
     @ManyToOne
     private Usuario usuario;
 
-    // relacion con el ranking al que pertenece la receta
     @ManyToOne
     private Ranking ranking;
 }

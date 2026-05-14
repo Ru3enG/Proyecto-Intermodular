@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <title>Nueva receta</title>
     <link rel="stylesheet" th:href="@{/css/recetas.css}">
+    <link rel="stylesheet" th:href="@{/css/footer.css}">
 </head>
 <body>
 
@@ -19,7 +20,7 @@
                 <label>Nombre de la receta</label>
                 <input type="text" th:field="*{recetaNombre}" required>
 
-                <!-- desplegable para elegir el ranking -->
+                <!-- desplegable  -->
                 <label>Ranking</label>
                 <select th:field="*{rankingId}" required>
                     <option value="">Elige un ranking...</option>
@@ -31,16 +32,18 @@
                 </select>
 
                 <label>Ingredientes</label>
-                <textarea th:field="*{ingredientes}" rows="5" placeholder="Un ingrediente por línea..." required></textarea>
+                <textarea th:field="*{ingredientes}" rows="5" placeholder="Un ingrediente por línea" required></textarea>
 
                 <label>Pasos a seguir</label>
-                <textarea th:field="*{pasos}" rows="8" placeholder="Describe los pasos..." required></textarea>
+                <textarea th:field="*{pasos}" rows="8" placeholder="Describe los pasos" required></textarea>
 
                 <button type="submit">Guardar receta</button>
             </form>
         </div>
 
     </div>
+
+    <div th:replace="~{navbar :: footer}"></div>
 
 </body>
 </html>

@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <title>Recetas</title>
     <link rel="stylesheet" th:href="@{/css/recetas.css}">
+    <link rel="stylesheet" th:href="@{/css/footer.css}">
 </head>
 <body>
 
@@ -15,11 +16,10 @@
             <h1>Recetas</h1>
             <a th:href="@{/recetas/nueva}" class="btn-nueva">+ Nueva receta</a>
         </div>
-
-        <!-- FILTROS -->
+        <!-- filtros -->
         <div class="filtros">
 
-            <!-- filtro por ranking -->
+            <!-- ranking -->
             <form th:action="@{/recetas}" method="get" class="form-filtro">
                 <select name="rankingId">
                     <option value="">Todos los rankings</option>
@@ -33,7 +33,7 @@
                 <button type="submit">Filtrar</button>
             </form>
 
-            <!-- filtro por nombre -->
+            <!-- nombre -->
             <form th:action="@{/recetas}" method="get" class="form-filtro">
                 <input type="text" name="nombre" placeholder="Buscar por nombre..."
                        th:value="${nombre}">
@@ -42,7 +42,7 @@
 
         </div>
 
-        <!-- lista de recetas -->
+        <!-- recetas -->
         <div class="lista-recetas">
             <div class="receta-card" th:each="receta : ${recetas}">
                 <div class="receta-info">
@@ -57,6 +57,8 @@
         </div>
 
     </div>
+
+    <div th:replace="~{navbar :: footer}"></div>
 
 </body>
 </html>

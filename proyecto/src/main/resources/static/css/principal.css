@@ -162,10 +162,3 @@ h1 {
     background-color: rgba(100, 70, 30, 0.05);
 }
 
-/* INDICADOR */
-.indicador {
-    text-align: center;
-    margin-top: 5px;
-    color: #1a4a7a;
-    font-size: 15px;
-}

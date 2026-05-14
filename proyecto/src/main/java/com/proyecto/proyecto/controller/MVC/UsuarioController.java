@@ -28,7 +28,7 @@ public class UsuarioController {
     @PostMapping("/registro")
     public String registrar(@Valid @ModelAttribute UsuarioDTO dto) {
         usuarioService.registrarUsuario(dto);
-        return "login";
+        return "redirect:/login";
     }
 
 }

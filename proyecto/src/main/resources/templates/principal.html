@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <title>Principal</title>
     <link rel="stylesheet" th:href="@{/css/principal.css}">
+    <link rel="stylesheet" th:href="@{/css/footer.css}">
 </head>
 <body>
 
@@ -60,14 +61,6 @@
                        th:classappend="${totalPaginas == 1} ? 'oculta'"
                        th:data-href="@{/principal(idx=${indiceActual}, pagina=${paginaSiguiente})}">&#8595;</a>
 
-                    <!-- indicadores -->
-                    <p class="indicador">
-                        Ranking <span th:text="${indiceActual + 1}">1</span> / <span th:text="${#lists.size(rankings)}">1</span>
-                        <span th:if="${totalPaginas > 1}">
-                            &nbsp;·&nbsp; Página <span th:text="${pagina + 1}">1</span> / <span th:text="${totalPaginas}">1</span>
-                        </span>
-                    </p>
-
                 </div>
 
                 <!-- flecha ranking siguiente (derecha) -->
@@ -77,6 +70,8 @@
 
         </div>
     </div>
+
+    <div th:replace="~{navbar :: footer}"></div>
 
     <script>
         // animacion de enrollar y desenrollar el pergamino al cambiar

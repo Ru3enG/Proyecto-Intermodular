@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.proyecto.proyecto.model.Receta;
 import com.proyecto.proyecto.model.Usuario;
-import com.proyecto.proyecto.repository.UsuarioRepository;
 import com.proyecto.proyecto.service.RecetaService;
 import com.proyecto.proyecto.service.UsuarioService;
 
@@ -20,21 +19,17 @@ import com.proyecto.proyecto.service.UsuarioService;
 public class OpcionesController {
 
     private UsuarioService usuarioService;
-    private UsuarioRepository usuarioRepository;
     private RecetaService recetaService;
 
-    public OpcionesController(UsuarioService usuarioService, UsuarioRepository usuarioRepository,
-            RecetaService recetaService) {
+    public OpcionesController(UsuarioService usuarioService, RecetaService recetaService) {
         this.usuarioService = usuarioService;
-        this.usuarioRepository = usuarioRepository;
         this.recetaService = recetaService;
     }
 
     @GetMapping("/opciones")
     public String opciones(@AuthenticationPrincipal UserDetails userDetails, Model model) {
 
-        Usuario usuario = usuarioRepository.findByUsername(userDetails.getUsername())
-                .orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
+        Usuario usuario = usuarioService.getByUsername(userDetails.getUsername());
 
         // cojo las recetas del usuario
         List<Receta> recetas = recetaService.getRecetasDeUsuario(usuario.getId());
@@ -51,8 +46,7 @@ public class OpcionesController {
             @RequestParam String passwordNueva,
             Model model) {
 
-        Usuario usuario = usuarioRepository.findByUsername(userDetails.getUsername())
-                .orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
+        Usuario usuario = usuarioService.getByUsername(userDetails.getUsername());
 
         boolean exito = usuarioService.cambiarPassword(usuario.getId(), passwordActual, passwordNueva);
 
