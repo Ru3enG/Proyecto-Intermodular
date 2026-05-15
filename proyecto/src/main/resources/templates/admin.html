@@ -57,6 +57,7 @@
                     <th>Username</th>
                     <th>Email</th>
                     <th>Rol</th>
+                    <th>Cambiar rol</th>
                     <th>Eliminar</th>
                     <th>Cambiar contraseña</th>
                 </tr>
@@ -67,6 +68,15 @@
                     <td th:text="${usuario.username}">usuario</td>
                     <td th:text="${usuario.email}">email</td>
                     <td th:text="${usuario.rol}">USER</td>
+                    <td>
+                        <form th:action="@{/admin/usuario/rol/{id}(id=${usuario.id})}" method="post">
+                            <select name="nuevoRol">
+                                <option value="ADMIN" th:selected="${usuario.rol == 'ADMIN'}">ADMIN</option>
+                                <option value="USER" th:selected="${usuario.rol == 'USER'}">USER</option>
+                            </select>
+                            <button type="submit">Cambiar</button>
+                        </form>
+                    </td>
                     <td>
                         <form th:action="@{/admin/usuario/eliminar/{id}(id=${usuario.id})}" method="post">
                             <button type="submit">Eliminar</button>
@@ -125,6 +135,39 @@
                 </tr>
                 <tr th:if="${#lists.isEmpty(posiciones)}">
                     <td colspan="4">No hay posiciones todavía</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <!-- RECETAS -->
+    <div class="seccion">
+        <h2>Recetas</h2>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Nombre</th>
+                    <th>Autor</th>
+                    <th>Ranking</th>
+                    <th>Acción</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="receta : ${recetas}">
+                    <td th:text="${receta.id}">1</td>
+                    <td th:text="${receta.recetaNombre}">Nombre</td>
+                    <td th:text="${receta.usuario.username}">usuario</td>
+                    <td th:text="${receta.ranking.rankingName}">ranking</td>
+                    <td>
+                        <form th:action="@{/admin/receta/eliminar/{id}(id=${receta.id})}" method="post">
+                            <button type="submit">Eliminar</button>
+                        </form>
+                    </td>
+                </tr>
+                <tr th:if="${#lists.isEmpty(recetas)}">
+                    <td colspan="5">No hay recetas todavía</td>
                 </tr>
             </tbody>
         </table>

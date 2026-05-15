@@ -162,3 +162,24 @@ h1 {
     background-color: rgba(100, 70, 30, 0.05);
 }
 
+@media (max-width: 768px) {
+    .navbar { padding: 10px 15px; }
+    .navbar-logo .logo-img { height: 38px; }
+    .nav-link { font-size: 13px; }
+    .navbar-iconos { gap: 12px; }
+
+    .pergamino-wrapper { flex-direction: column; gap: 10px; }
+
+    .pergamino {
+        width: 95vw;
+        min-height: unset;
+        padding: 60px 30px;
+        background-size: 100% 100%;
+    }
+
+    .flecha { font-size: 1.8rem; }
+
+    .ranking-tabla th, .ranking-tabla td { font-size: 12px; padding: 5px 6px; }
+    .ranking-tabla .titulo-ranking { font-size: 15px; }
+}
+

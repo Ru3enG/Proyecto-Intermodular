@@ -82,3 +82,16 @@ button {
 button:hover {
     background-color: #c9662c;
 }
+
+@media (max-width: 768px) {
+    .navbar { padding: 10px 15px; }
+    .navbar-logo .logo-img { height: 38px; }
+    .nav-link { font-size: 13px; }
+    .navbar-iconos { gap: 12px; }
+
+    body { padding: 15px; }
+
+    table { display: block; overflow-x: auto; white-space: nowrap; }
+
+    form { flex-wrap: wrap; }
+}

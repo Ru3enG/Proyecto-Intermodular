@@ -12,9 +12,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.proyecto.proyecto.model.Posicion;
 import com.proyecto.proyecto.model.Ranking;
+import com.proyecto.proyecto.model.Receta;
 import com.proyecto.proyecto.model.Usuario;
 import com.proyecto.proyecto.service.AdminPosicionService;
 import com.proyecto.proyecto.service.RankingService;
+import com.proyecto.proyecto.service.RecetaService;
 import com.proyecto.proyecto.service.UsuarioService;
 
 @Controller
@@ -23,12 +25,14 @@ public class AdminController {
     private RankingService rankingService;
     private UsuarioService usuarioService;
     private AdminPosicionService adminPosicionService;
+    private RecetaService recetaService;
 
     public AdminController(RankingService rankingService, UsuarioService usuarioService,
-            AdminPosicionService adminPosicionService) {
+            AdminPosicionService adminPosicionService, RecetaService recetaService) {
         this.rankingService = rankingService;
         this.usuarioService = usuarioService;
         this.adminPosicionService = adminPosicionService;
+        this.recetaService = recetaService;
     }
 
     @GetMapping("/admin")
@@ -36,10 +40,12 @@ public class AdminController {
         List<Ranking> rankings = rankingService.getTodos();
         List<Usuario> usuarios = usuarioService.getTodos();
         List<Posicion> posiciones = adminPosicionService.getTodas();
+        List<Receta> recetas = recetaService.getTodas();
 
         model.addAttribute("rankings", rankings);
         model.addAttribute("usuarios", usuarios);
         model.addAttribute("posiciones", posiciones);
+        model.addAttribute("recetas", recetas);
         model.addAttribute("nuevoRanking", new Ranking());
 
         return "admin";
@@ -78,6 +84,18 @@ public class AdminController {
     @PostMapping("/admin/posicion/eliminar/{id}")
     public String eliminarPosicion(@PathVariable Long id) {
         adminPosicionService.eliminar(id);
+        return "redirect:/admin";
+    }
+
+    @PostMapping("/admin/receta/eliminar/{id}")
+    public String eliminarReceta(@PathVariable Long id) {
+        recetaService.eliminar(id);
+        return "redirect:/admin";
+    }
+
+    @PostMapping("/admin/usuario/rol/{id}")
+    public String cambiarRol(@PathVariable Long id, @RequestParam String nuevoRol) {
+        usuarioService.cambiarRol(id, nuevoRol);
         return "redirect:/admin";
     }
 }

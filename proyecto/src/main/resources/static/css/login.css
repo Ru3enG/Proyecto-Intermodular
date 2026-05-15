@@ -118,3 +118,10 @@ button:hover {
 .registro-link a:hover {
     text-decoration: underline;
 }
+
+@media (max-width: 480px) {
+    .login-card {
+        width: 92vw;
+        padding: 25px 20px;
+    }
+}

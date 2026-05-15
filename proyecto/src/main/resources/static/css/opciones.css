@@ -181,3 +181,14 @@ button:hover { background-color: #c9662c; }
 }
 
 .btn-logout:hover { background-color: #b52b27; }
+
+@media (max-width: 768px) {
+    .navbar { padding: 10px 15px; }
+    .navbar-logo .logo-img { height: 38px; }
+    .nav-link { font-size: 13px; }
+    .navbar-iconos { gap: 12px; }
+
+    .seccion { width: 100%; padding: 18px 15px; }
+    .receta-card-pequeña { flex-direction: column; align-items: flex-start; gap: 8px; }
+    .receta-acciones { flex-wrap: wrap; }
+}

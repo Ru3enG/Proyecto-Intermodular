@@ -96,6 +96,13 @@ public class UsuarioService {
         return true;
     }
 
+    public void cambiarRol(Long id, String nuevoRol) {
+        Usuario usuario = usuarioRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
+        usuario.setRol(nuevoRol);
+        usuarioRepository.save(usuario);
+    }
+
     public Usuario dtoToEntity(UsuarioDTO dto) {
         return new Usuario(
                 dto.getId(),

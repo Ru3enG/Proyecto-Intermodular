@@ -163,3 +163,21 @@ button:hover { background-color: #c9662c; }
 .comentario-texto { margin-top: 4px; color: #444; font-size: 14px; }
 .form-comentario { display: flex; flex-direction: column; gap: 8px; }
 .exito { color: green; font-size: 14px; }
+
+@media (max-width: 768px) {
+    .navbar { padding: 10px 15px; }
+    .navbar-logo .logo-img { height: 38px; }
+    .nav-link { font-size: 13px; }
+    .navbar-iconos { gap: 12px; }
+
+    .lista-recetas { width: 100%; }
+    .seccion { width: 100%; padding: 18px 15px; }
+
+    .cabecera-recetas { flex-direction: column; align-items: flex-start; gap: 10px; }
+    .filtros { flex-direction: column; gap: 10px; }
+    .form-filtro { flex-wrap: wrap; }
+
+    .receta-card { flex-direction: column; align-items: flex-start; gap: 12px; }
+
+    .meta-receta { flex-wrap: wrap; }
+}
