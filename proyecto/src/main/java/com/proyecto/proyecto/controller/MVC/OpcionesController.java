@@ -48,13 +48,13 @@ public class OpcionesController {
 
         Usuario usuario = usuarioService.getByUsername(userDetails.getUsername());
 
-        boolean exito = usuarioService.cambiarPassword(usuario.getId(), passwordActual, passwordNueva);
+        String error = usuarioService.cambiarPassword(usuario.getId(), passwordActual, passwordNueva);
 
-        if (!exito) {
+        if (error != null) {
             List<Receta> recetas = recetaService.getRecetasDeUsuario(usuario.getId());
             model.addAttribute("usuario", usuario);
             model.addAttribute("recetas", recetas);
-            model.addAttribute("error", "La contraseña actual no es correcta");
+            model.addAttribute("error", error);
             return "opciones";
         }
 

@@ -36,4 +36,6 @@ public class Receta {
 
     @ManyToOne
     private Ranking ranking;
+
+    private String imagenUrl;
 }

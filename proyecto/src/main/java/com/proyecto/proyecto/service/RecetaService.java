@@ -1,9 +1,13 @@
 package com.proyecto.proyecto.service;
 
+import java.io.IOException;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
+import com.cloudinary.Cloudinary;
 import com.proyecto.proyecto.dto.RecetaDTO;
 import com.proyecto.proyecto.model.Ranking;
 import com.proyecto.proyecto.model.Receta;
@@ -16,7 +20,6 @@ import com.proyecto.proyecto.repository.RecetaRepository;
 import com.proyecto.proyecto.repository.UsuarioRepository;
 import com.proyecto.proyecto.repository.VotoDificultadRepository;
 
-
 import jakarta.transaction.Transactional;
 
 @Service
@@ -28,17 +31,19 @@ public class RecetaService {
     private ComentarioRepository comentarioRepository;
     private PuntuacionRecetaRepository puntuacionRecetaRepository;
     private VotoDificultadRepository votoDificultadRepository;
+    private Cloudinary cloudinary;
 
     public RecetaService(RecetaRepository recetaRepository, UsuarioRepository usuarioRepository,
             RankingRepository rankingRepository, ComentarioRepository comentarioRepository,
             PuntuacionRecetaRepository puntuacionRecetaRepository,
-            VotoDificultadRepository votoDificultadRepository) {
+            VotoDificultadRepository votoDificultadRepository, Cloudinary cloudinary) {
         this.recetaRepository = recetaRepository;
         this.usuarioRepository = usuarioRepository;
         this.rankingRepository = rankingRepository;
         this.comentarioRepository = comentarioRepository;
         this.puntuacionRecetaRepository = puntuacionRecetaRepository;
         this.votoDificultadRepository = votoDificultadRepository;
+        this.cloudinary = cloudinary;
     }
 
     // devuelve todas las recetas
@@ -62,7 +67,7 @@ public class RecetaService {
     }
 
     // crea una receta nueva asociada al usuario logueado y al ranking elegido
-    public void crear(RecetaDTO dto, String username) {
+    public void crear(RecetaDTO dto, String username, MultipartFile imagen) {
         Usuario usuario = usuarioRepository.findByUsername(username)
                 .orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
 
@@ -75,6 +80,16 @@ public class RecetaService {
         receta.setPasos(dto.getPasos());
         receta.setUsuario(usuario);
         receta.setRanking(ranking);
+
+        if (imagen != null && !imagen.isEmpty()) {
+            try {
+                @SuppressWarnings("unchecked")
+                Map<String, Object> uploadResult = cloudinary.uploader().upload(imagen.getBytes(), Map.of());
+                receta.setImagenUrl((String) uploadResult.get("secure_url"));
+            } catch (IOException e) {
+                throw new RuntimeException("Error al subir la imagen");
+            }
+        }
 
         recetaRepository.save(receta);
 

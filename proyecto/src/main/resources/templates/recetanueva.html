@@ -16,7 +16,7 @@
         <h1>Nueva receta</h1>
 
         <div class="seccion">
-            <form th:action="@{/recetas/nueva}" method="post" th:object="${recetaDTO}">
+            <form th:action="@{/recetas/nueva}" method="post" th:object="${recetaDTO}" enctype="multipart/form-data">
 
                 <label>Nombre de la receta</label>
                 <input type="text" th:field="*{recetaNombre}" required>
@@ -47,6 +47,9 @@
                     <option value="4">Complicada</option>
                     <option value="5">Muy Complicada</option>
                 </select>
+
+                <label>Imagen (opcional)</label>
+                <input type="file" name="imagen" accept="image/*">
 
                 <button type="submit">Guardar receta</button>
             </form>

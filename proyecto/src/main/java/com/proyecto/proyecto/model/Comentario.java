@@ -23,7 +23,7 @@ public class Comentario {
     @Column(unique = true)
     private Long id;
 
-    @Column(columnDefinition = "TEXT")
+    @Column(length = 500)
     private String texto;
 
     @ManyToOne

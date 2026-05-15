@@ -21,6 +21,10 @@
             <span class="badge dificultad-badge" th:if="${dificultadMedia != null}" th:text="'Dificultad: ' + ${dificultadMedia}">dificultad</span>
         </div>
 
+        <div th:if="${receta.imagenUrl != null}" class="seccion imagen-receta">
+            <img th:src="${receta.imagenUrl}" alt="Imagen de la receta">
+        </div>
+
         <div class="seccion">
             <h2>Ingredientes</h2>
             <p th:text="${receta.ingredientes}" class="texto-pre">ingredientes</p>
@@ -78,7 +82,7 @@
                 <p th:if="${#lists.isEmpty(comentarios)}">No hay comentarios todavía.</p>
             </div>
             <form th:action="@{/recetas/{id}/comentar(id=${receta.id})}" method="post" class="form-comentario">
-                <textarea name="texto" rows="3" placeholder="Escribe un comentario..." required></textarea>
+                <textarea name="texto" rows="3" placeholder="Escribe un comentario" maxlength="500" required></textarea>
                 <button type="submit">Comentar</button>
             </form>
         </div>

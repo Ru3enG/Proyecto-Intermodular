@@ -36,7 +36,7 @@
 
             <!-- nombre -->
             <form th:action="@{/recetas}" method="get" class="form-filtro">
-                <input type="text" name="nombre" placeholder="Buscar por nombre..."
+                <input type="text" name="nombre" placeholder="Buscar por nombre"
                        th:value="${nombre}">
                 <button type="submit">Buscar</button>
             </form>
@@ -46,6 +46,7 @@
         <!-- recetas -->
         <div class="lista-recetas">
             <div class="receta-card" th:each="receta : ${recetas}">
+                <img th:if="${receta.imagenUrl != null}" th:src="${receta.imagenUrl}" alt="imagen" class="receta-card-img">
                 <div class="receta-info">
                     <h3 th:text="${receta.recetaNombre}">Nombre receta</h3>
                     <p th:text="${receta.usuario.username}">usuario</p>

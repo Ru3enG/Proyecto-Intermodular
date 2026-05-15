@@ -4,6 +4,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.springframework.web.multipart.MultipartFile;
+
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
@@ -92,8 +94,9 @@ public class RecetaController {
 
     @PostMapping("/recetas/nueva")
     public String guardarReceta(@Valid @ModelAttribute RecetaDTO recetaDTO,
+            @RequestParam(required = false) MultipartFile imagen,
             @AuthenticationPrincipal UserDetails userDetails) {
-        recetaService.crear(recetaDTO, userDetails.getUsername());
+        recetaService.crear(recetaDTO, userDetails.getUsername(), imagen);
         return "redirect:/recetas";
     }
 

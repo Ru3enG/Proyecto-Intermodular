@@ -135,7 +135,7 @@ button:hover { background-color: #c9662c; }
 
 .autor { color: #888; font-size: 14px; margin-bottom: 25px; }
 
-.texto-pre { white-space: pre-line; color: #444; line-height: 1.6; }
+.texto-pre { white-space: pre-line; color: #444; line-height: 1.6; overflow-wrap: break-word; }
 
 .meta-receta { display: flex; align-items: center; gap: 12px; margin-bottom: 25px; }
 
@@ -156,6 +156,23 @@ button:hover { background-color: #c9662c; }
     border-color: #ffcc80;
 }
 
+.receta-card-img {
+    width: 100%;
+    max-height: 160px;
+    object-fit: cover;
+    border-radius: 6px 6px 0 0;
+    display: block;
+    margin: -18px -20px 14px -20px;
+    width: calc(100% + 40px);
+}
+
+.imagen-receta img {
+    width: 100%;
+    max-height: 400px;
+    object-fit: cover;
+    border-radius: 8px;
+}
+
 .lista-comentarios { display: flex; flex-direction: column; gap: 12px; margin-bottom: 20px; }
 
 .comentario {
@@ -165,8 +182,8 @@ button:hover { background-color: #c9662c; }
     padding: 10px 14px;
 }
 
-.comentario-usuario { font-weight: bold; font-size: 13px; color: #1a4a7a; }
-.comentario-texto { margin-top: 4px; color: #444; font-size: 14px; }
+.comentario-usuario { font-weight: bold; font-size: 13px; color: #1a4a7a; overflow-wrap: break-word; }
+.comentario-texto { margin-top: 4px; color: #444; font-size: 14px; overflow-wrap: break-word; }
 .form-comentario { display: flex; flex-direction: column; gap: 8px; }
 .exito { color: green; font-size: 14px; }
 

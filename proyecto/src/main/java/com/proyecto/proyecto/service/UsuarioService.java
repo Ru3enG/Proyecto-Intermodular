@@ -82,18 +82,25 @@ public class UsuarioService {
     }
 
     // el usuario cambia su propia contraseña, comprueba que la actual sea correcta
-    public boolean cambiarPassword(Long id, String passwordActual, String passwordNueva) {
+    public String cambiarPassword(Long id, String passwordActual, String passwordNueva) {
         Usuario usuario = usuarioRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
 
-        // compruebo que la contraseña actual coincide con la que tiene en la base de datos
         if (!passwordEncoder.matches(passwordActual, usuario.getPassword())) {
-            return false;
+            return "La contraseña actual no es correcta";
+        }
+
+        if (passwordNueva == null || passwordNueva.isBlank()) {
+            return "La nueva contraseña no puede estar vacía";
+        }
+
+        if (passwordActual.equals(passwordNueva)) {
+            return "La nueva contraseña debe ser distinta a la actual";
         }
 
         usuario.setPassword(passwordEncoder.encode(passwordNueva));
         usuarioRepository.save(usuario);
-        return true;
+        return null;
     }
 
     public void cambiarRol(Long id, String nuevoRol) {
