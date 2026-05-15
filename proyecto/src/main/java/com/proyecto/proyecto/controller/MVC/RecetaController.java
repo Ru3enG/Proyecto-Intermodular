@@ -1,6 +1,8 @@
 package com.proyecto.proyecto.controller.MVC;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -24,6 +26,7 @@ import com.proyecto.proyecto.service.PuntuacionRecetaService;
 import com.proyecto.proyecto.service.RankingService;
 import com.proyecto.proyecto.service.RecetaService;
 import com.proyecto.proyecto.service.UsuarioService;
+import com.proyecto.proyecto.service.VotoDificultadService;
 
 @Controller
 public class RecetaController {
@@ -33,15 +36,17 @@ public class RecetaController {
     private PuntuacionRecetaService puntuacionRecetaService;
     private ComentarioService comentarioService;
     private UsuarioService usuarioService;
+    private VotoDificultadService votoDificultadService;
 
     public RecetaController(RecetaService recetaService, RankingService rankingService,
             PuntuacionRecetaService puntuacionRecetaService, ComentarioService comentarioService,
-            UsuarioService usuarioService) {
+            UsuarioService usuarioService, VotoDificultadService votoDificultadService) {
         this.recetaService = recetaService;
         this.rankingService = rankingService;
         this.puntuacionRecetaService = puntuacionRecetaService;
         this.comentarioService = comentarioService;
         this.usuarioService = usuarioService;
+        this.votoDificultadService = votoDificultadService;
     }
 
     @GetMapping("/recetas")
@@ -62,10 +67,17 @@ public class RecetaController {
 
         List<Ranking> rankings = rankingService.getTodos();
 
+        Map<Long, String> dificultades = new HashMap<>();
+        for (Receta r : recetas) {
+            String d = votoDificultadService.getDificultadMedia(r.getId());
+            if (d != null) dificultades.put(r.getId(), d);
+        }
+
         model.addAttribute("recetas", recetas);
         model.addAttribute("rankings", rankings);
         model.addAttribute("rankingId", rankingId);
         model.addAttribute("nombre", nombre);
+        model.addAttribute("dificultades", dificultades);
 
         return "recetas";
     }
@@ -98,11 +110,15 @@ public class RecetaController {
         // compruebo si ya voto y si es su propia receta
         boolean yaVoto = puntuacionRecetaService.yaVoto(id, usuario.getId());
         boolean esAutor = receta.getUsuario().getId().equals(usuario.getId());
+        boolean yaVotoDificultad = votoDificultadService.yaVoto(id, usuario.getId());
+        String dificultadMedia = votoDificultadService.getDificultadMedia(id);
 
         model.addAttribute("receta", receta);
         model.addAttribute("comentarios", comentarios);
         model.addAttribute("yaVoto", yaVoto);
         model.addAttribute("esAutor", esAutor);
+        model.addAttribute("yaVotoDificultad", yaVotoDificultad);
+        model.addAttribute("dificultadMedia", dificultadMedia);
         model.addAttribute("usernameActual", userDetails.getUsername());
 
         return "recetadetalle";
@@ -120,6 +136,15 @@ public class RecetaController {
             @RequestParam Integer puntos,
             @AuthenticationPrincipal UserDetails userDetails) {
         puntuacionRecetaService.puntuar(id, puntos, userDetails.getUsername());
+        return "redirect:/recetas/" + id;
+    }
+
+    // votar dificultad de una receta
+    @PostMapping("/recetas/{id}/dificultad")
+    public String votarDificultad(@PathVariable Long id,
+            @RequestParam Integer dificultad,
+            @AuthenticationPrincipal UserDetails userDetails) {
+        votoDificultadService.votar(id, dificultad, userDetails.getUsername());
         return "redirect:/recetas/" + id;
     }
 

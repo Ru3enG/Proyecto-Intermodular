@@ -26,4 +26,7 @@ public class RecetaDTO {
 
     @NotNull
     private Long rankingId;
+
+    @NotNull
+    private Integer dificultad;
 }

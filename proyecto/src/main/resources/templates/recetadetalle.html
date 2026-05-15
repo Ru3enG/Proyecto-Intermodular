@@ -18,6 +18,7 @@
         <div class="meta-receta">
             <p class="autor">Receta de <strong th:text="${receta.usuario.username}">usuario</strong></p>
             <span class="badge" th:text="${receta.ranking.rankingName}">ranking</span>
+            <span class="badge dificultad-badge" th:if="${dificultadMedia != null}" th:text="'Dificultad: ' + ${dificultadMedia}">dificultad</span>
         </div>
 
         <div class="seccion">
@@ -41,6 +42,27 @@
                     <label>Puntuación (1-10)</label>
                     <input type="number" name="puntos" min="1" max="10" required>
                     <button type="submit">Puntuar</button>
+                </form>
+            </div>
+        </div>
+
+        <!-- votar dificultad si no eres el creador -->
+        <div class="seccion" th:if="${!esAutor}">
+            <h2>Dificultad de la receta</h2>
+            <div th:if="${yaVotoDificultad}">
+                <p class="exito">Ya has valorado la dificultad</p>
+            </div>
+            <div th:if="${!yaVotoDificultad}">
+                <form th:action="@{/recetas/{id}/dificultad(id=${receta.id})}" method="post">
+                    <label>¿Qué dificultad le pones?</label>
+                    <select name="dificultad" required>
+                        <option value="1">Muy Fácil</option>
+                        <option value="2">Fácil</option>
+                        <option value="3">Normal</option>
+                        <option value="4">Complicada</option>
+                        <option value="5">Muy Complicada</option>
+                    </select>
+                    <button type="submit">Valorar dificultad</button>
                 </form>
             </div>
         </div>

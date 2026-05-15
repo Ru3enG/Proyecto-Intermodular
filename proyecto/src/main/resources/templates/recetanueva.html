@@ -38,6 +38,16 @@
                 <label>Pasos a seguir</label>
                 <textarea th:field="*{pasos}" rows="8" placeholder="Describe los pasos" required></textarea>
 
+                <label>Dificultad</label>
+                <select th:field="*{dificultad}" required>
+                    <option value="">Elige la dificultad...</option>
+                    <option value="1">Muy Fácil</option>
+                    <option value="2">Fácil</option>
+                    <option value="3">Normal</option>
+                    <option value="4">Complicada</option>
+                    <option value="5">Muy Complicada</option>
+                </select>
+
                 <button type="submit">Guardar receta</button>
             </form>
         </div>
