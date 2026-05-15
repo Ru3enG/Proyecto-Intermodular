@@ -111,6 +111,14 @@ h1 {
     transform-origin: center;
 }
 
+/* UTENSILIOS */
+.utensilio {
+    height: 320px;
+    width: auto;
+    object-fit: contain;
+    flex-shrink: 0;
+}
+
 /* ANIMACIONES */
 @keyframes enrollar {
     0%   { transform: scaleY(1); opacity: 1; }
@@ -170,16 +178,30 @@ h1 {
 
     .pergamino-wrapper { flex-direction: column; gap: 10px; }
 
+    .utensilio { display: none; }
+
     .pergamino {
-        width: 95vw;
+        width: 92vw;
         min-height: unset;
-        padding: 60px 30px;
+        padding: 70px 45px;
         background-size: 100% 100%;
+        overflow: hidden;
     }
 
-    .flecha { font-size: 1.8rem; }
+    .ranking-tabla {
+        width: 100%;
+        table-layout: fixed;
+    }
 
-    .ranking-tabla th, .ranking-tabla td { font-size: 12px; padding: 5px 6px; }
-    .ranking-tabla .titulo-ranking { font-size: 15px; }
+    .ranking-tabla th, .ranking-tabla td {
+        font-size: 11px;
+        padding: 4px 4px;
+        word-break: break-word;
+        overflow: hidden;
+    }
+
+    .ranking-tabla .titulo-ranking { font-size: 14px; }
+
+    .flecha { font-size: 1.8rem; }
 }
 

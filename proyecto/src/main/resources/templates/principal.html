@@ -22,6 +22,8 @@
                 <!-- flecha ranking anterior (izquierda) -->
                 <a class="flecha flecha-lateral" th:data-href="@{/principal(idx=${indiceAnterior}, pagina=0)}">&#8592;</a>
 
+                <img th:src="@{/images/cuchara.png}" class="utensilio" alt="cuchara">
+
                 <div class="columna-central">
 
                     <!-- flecha pagina anterior (arriba) -->
@@ -62,6 +64,8 @@
                        th:data-href="@{/principal(idx=${indiceActual}, pagina=${paginaSiguiente})}">&#8595;</a>
 
                 </div>
+
+                <img th:src="@{/images/tenedor.png}" class="utensilio" alt="tenedor">
 
                 <!-- flecha ranking siguiente (derecha) -->
                 <a class="flecha flecha-lateral" th:data-href="@{/principal(idx=${indiceSiguiente}, pagina=0)}">&#8594;</a>

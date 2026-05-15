@@ -140,6 +140,7 @@ public class RecetaController {
         dto.setIngredientes(receta.getIngredientes());
         dto.setPasos(receta.getPasos());
         dto.setRankingId(receta.getRanking().getId());
+        dto.setDificultad(1);
 
         model.addAttribute("recetaDTO", dto);
         model.addAttribute("rankings", rankings);
