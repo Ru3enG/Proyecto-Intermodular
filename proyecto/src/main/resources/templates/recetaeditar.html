@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Editar receta</title>
+    <link rel="stylesheet" th:href="@{/css/recetas.css}">
+    <link rel="stylesheet" th:href="@{/css/footer.css}">
+</head>
+<body>
+
+    <div th:replace="~{navbar :: navbar}"></div>
+
+    <div class="contenido">
+
+        <h1>Editar receta</h1>
+
+        <div class="seccion">
+            <form th:action="@{/recetas/{id}/editar(id=${recetaDTO.id})}" method="post" th:object="${recetaDTO}" enctype="multipart/form-data">
+
+                <label>Nombre de la receta</label>
+                <input type="text" th:field="*{recetaNombre}" required>
+
+                <label>Ranking</label>
+                <select th:field="*{rankingId}" required>
+                    <option th:each="r : ${rankings}"
+                            th:value="${r.id}"
+                            th:text="${r.rankingName}">
+                        Ranking
+                    </option>
+                </select>
+
+                <label>Ingredientes</label>
+                <textarea th:field="*{ingredientes}" rows="5" required></textarea>
+
+                <label>Pasos a seguir</label>
+                <textarea th:field="*{pasos}" rows="8" required></textarea>
+
+                <label>Imagen</label>
+                <div th:if="${receta.imagenUrl != null}" class="imagen-actual">
+                    <img th:src="${receta.imagenUrl}" alt="Imagen actual">
+                    <p>Sube una nueva imagen para reemplazarla</p>
+                </div>
+                <input type="file" name="imagen" accept="image/*">
+
+                <button type="submit">Guardar cambios</button>
+            </form>
+        </div>
+
+    </div>
+
+    <div th:replace="~{navbar :: footer}"></div>
+
+</body>
+</html>

@@ -127,6 +127,35 @@ public class RecetaController {
         return "recetadetalle";
     }
 
+    @GetMapping("/recetas/{id}/editar")
+    public String editarRecetaForm(@PathVariable Long id,
+            @AuthenticationPrincipal UserDetails userDetails,
+            Model model) {
+        Receta receta = recetaService.getById(id);
+        List<Ranking> rankings = rankingService.getTodos();
+
+        RecetaDTO dto = new RecetaDTO();
+        dto.setId(receta.getId());
+        dto.setRecetaNombre(receta.getRecetaNombre());
+        dto.setIngredientes(receta.getIngredientes());
+        dto.setPasos(receta.getPasos());
+        dto.setRankingId(receta.getRanking().getId());
+
+        model.addAttribute("recetaDTO", dto);
+        model.addAttribute("rankings", rankings);
+        model.addAttribute("receta", receta);
+        return "recetaeditar";
+    }
+
+    @PostMapping("/recetas/{id}/editar")
+    public String editarReceta(@PathVariable Long id,
+            @Valid @ModelAttribute RecetaDTO recetaDTO,
+            @RequestParam(required = false) MultipartFile imagen,
+            @AuthenticationPrincipal UserDetails userDetails) {
+        recetaService.editar(id, recetaDTO, imagen);
+        return "redirect:/recetas/" + id;
+    }
+
     @PostMapping("/recetas/eliminar/{id}")
     public String eliminarReceta(@PathVariable Long id) {
         recetaService.eliminar(id);

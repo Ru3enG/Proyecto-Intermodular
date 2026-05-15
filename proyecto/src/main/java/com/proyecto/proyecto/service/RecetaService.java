@@ -100,6 +100,31 @@ public class RecetaService {
         votoDificultadRepository.save(votoInicial);
     }
 
+    public void editar(Long id, RecetaDTO dto, MultipartFile imagen) {
+        Receta receta = recetaRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Receta no encontrada"));
+
+        Ranking ranking = rankingRepository.findById(dto.getRankingId())
+                .orElseThrow(() -> new RuntimeException("Ranking no encontrado"));
+
+        receta.setRecetaNombre(dto.getRecetaNombre());
+        receta.setIngredientes(dto.getIngredientes());
+        receta.setPasos(dto.getPasos());
+        receta.setRanking(ranking);
+
+        if (imagen != null && !imagen.isEmpty()) {
+            try {
+                @SuppressWarnings("unchecked")
+                Map<String, Object> uploadResult = cloudinary.uploader().upload(imagen.getBytes(), Map.of());
+                receta.setImagenUrl((String) uploadResult.get("secure_url"));
+            } catch (IOException e) {
+                throw new RuntimeException("Error al subir la imagen");
+            }
+        }
+
+        recetaRepository.save(receta);
+    }
+
     @Transactional
     public void eliminar(Long id) {
         comentarioRepository.deleteByRecetaId(id);

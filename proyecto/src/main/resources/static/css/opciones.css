@@ -154,6 +154,20 @@ button:hover { background-color: #c9662c; }
 
 .btn-eliminar:hover { background-color: #b52b27; }
 
+.btn-editar {
+    padding: 6px 12px;
+    background-color: #1a4a7a;
+    color: white;
+    border-radius: 6px;
+    font-size: 13px;
+    text-decoration: none;
+}
+
+.btn-editar:hover { background-color: #163d66; }
+
+.imagen-actual img { width: 100%; max-height: 200px; object-fit: cover; border-radius: 6px; margin-bottom: 8px; }
+.imagen-actual p { font-size: 13px; color: #888; margin-bottom: 8px; }
+
 .btn-nueva {
     display: inline-block;
     padding: 8px 16px;
