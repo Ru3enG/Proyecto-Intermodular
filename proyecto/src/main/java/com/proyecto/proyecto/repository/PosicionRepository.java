@@ -14,4 +14,6 @@ public interface PosicionRepository extends JpaRepository<Posicion, Long> {
     List<Posicion> findByRankingIdOrderByPuntuacionDescUltimaActualizacionAsc(Long rankingId);
 
     Optional<Posicion> findByUsuarioIdAndRankingId(Long usuarioId, Long rankingId);
+
+    void deleteByUsuarioId(Long usuarioId);
 }

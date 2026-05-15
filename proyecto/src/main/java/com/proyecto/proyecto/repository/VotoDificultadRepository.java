@@ -16,4 +16,6 @@ public interface VotoDificultadRepository extends JpaRepository<VotoDificultad, 
     List<VotoDificultad> findByRecetaId(Long recetaId);
 
     void deleteByRecetaId(Long recetaId);
+
+    void deleteByUsuarioId(Long usuarioId);
 }

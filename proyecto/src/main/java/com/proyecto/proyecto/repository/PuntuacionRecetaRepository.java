@@ -13,4 +13,6 @@ public interface PuntuacionRecetaRepository extends JpaRepository<PuntuacionRece
     Optional<PuntuacionReceta> findByUsuarioIdAndRecetaId(Long usuarioId, Long recetaId);
 
     void deleteByRecetaId(Long recetaId);
+
+    void deleteByUsuarioId(Long usuarioId);
 }

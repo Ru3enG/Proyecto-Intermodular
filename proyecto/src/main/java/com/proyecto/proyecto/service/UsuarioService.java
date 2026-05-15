@@ -10,10 +10,15 @@ import com.proyecto.proyecto.dto.UsuarioDTO;
 import com.proyecto.proyecto.exception.ConflictoException;
 import com.proyecto.proyecto.model.Posicion;
 import com.proyecto.proyecto.model.Ranking;
+import com.proyecto.proyecto.model.Receta;
 import com.proyecto.proyecto.model.Usuario;
+import com.proyecto.proyecto.repository.ComentarioRepository;
 import com.proyecto.proyecto.repository.PosicionRepository;
+import com.proyecto.proyecto.repository.PuntuacionRecetaRepository;
 import com.proyecto.proyecto.repository.RankingRepository;
+import com.proyecto.proyecto.repository.RecetaRepository;
 import com.proyecto.proyecto.repository.UsuarioRepository;
+import com.proyecto.proyecto.repository.VotoDificultadRepository;
 
 import jakarta.transaction.Transactional;
 
@@ -24,13 +29,23 @@ public class UsuarioService {
     private UsuarioRepository usuarioRepository;
     private RankingRepository rankingRepository;
     private PosicionRepository posicionRepository;
+    private ComentarioRepository comentarioRepository;
+    private PuntuacionRecetaRepository puntuacionRecetaRepository;
+    private VotoDificultadRepository votoDificultadRepository;
+    private RecetaRepository recetaRepository;
 
     public UsuarioService(UsuarioRepository usuarioRepository, PasswordEncoder passwordEncoder,
-            RankingRepository rankingRepository, PosicionRepository posicionRepository) {
+            RankingRepository rankingRepository, PosicionRepository posicionRepository,
+            ComentarioRepository comentarioRepository, PuntuacionRecetaRepository puntuacionRecetaRepository,
+            VotoDificultadRepository votoDificultadRepository, RecetaRepository recetaRepository) {
         this.usuarioRepository = usuarioRepository;
         this.passwordEncoder = passwordEncoder;
         this.rankingRepository = rankingRepository;
         this.posicionRepository = posicionRepository;
+        this.comentarioRepository = comentarioRepository;
+        this.puntuacionRecetaRepository = puntuacionRecetaRepository;
+        this.votoDificultadRepository = votoDificultadRepository;
+        this.recetaRepository = recetaRepository;
     }
 
     public List<Usuario> getTodos() {
@@ -68,8 +83,24 @@ public class UsuarioService {
         }
     }
 
-    // elimina un usuario por id
+    // elimina un usuario y todos sus datos relacionados
+    @Transactional
     public void eliminar(Long id) {
+        // borrar comentarios del usuario en recetas ajenas
+        comentarioRepository.deleteByUsuarioId(id);
+        // borrar puntuaciones y votos del usuario
+        puntuacionRecetaRepository.deleteByUsuarioId(id);
+        votoDificultadRepository.deleteByUsuarioId(id);
+        // borrar las recetas del usuario (y sus comentarios, puntuaciones y votos asociados)
+        List<Receta> recetas = recetaRepository.findByUsuarioId(id);
+        for (Receta receta : recetas) {
+            comentarioRepository.deleteByRecetaId(receta.getId());
+            puntuacionRecetaRepository.deleteByRecetaId(receta.getId());
+            votoDificultadRepository.deleteByRecetaId(receta.getId());
+            recetaRepository.delete(receta);
+        }
+        // borrar posiciones del usuario en los rankings
+        posicionRepository.deleteByUsuarioId(id);
         usuarioRepository.deleteById(id);
     }
 
