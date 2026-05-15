@@ -11,4 +11,6 @@ import com.proyecto.proyecto.model.PuntuacionReceta;
 public interface PuntuacionRecetaRepository extends JpaRepository<PuntuacionReceta, Long> {
 
     Optional<PuntuacionReceta> findByUsuarioIdAndRecetaId(Long usuarioId, Long recetaId);
+
+    void deleteByRecetaId(Long recetaId);
 }

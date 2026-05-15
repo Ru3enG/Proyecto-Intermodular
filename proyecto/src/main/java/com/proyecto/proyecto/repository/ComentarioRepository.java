@@ -11,4 +11,6 @@ import com.proyecto.proyecto.model.Comentario;
 public interface ComentarioRepository extends JpaRepository<Comentario, Long> {
 
     List<Comentario> findByRecetaId(Long recetaId);
+
+    void deleteByRecetaId(Long recetaId);
 }

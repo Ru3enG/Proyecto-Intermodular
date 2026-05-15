@@ -8,9 +8,13 @@ import com.proyecto.proyecto.dto.RecetaDTO;
 import com.proyecto.proyecto.model.Ranking;
 import com.proyecto.proyecto.model.Receta;
 import com.proyecto.proyecto.model.Usuario;
+import com.proyecto.proyecto.repository.ComentarioRepository;
+import com.proyecto.proyecto.repository.PuntuacionRecetaRepository;
 import com.proyecto.proyecto.repository.RankingRepository;
 import com.proyecto.proyecto.repository.RecetaRepository;
 import com.proyecto.proyecto.repository.UsuarioRepository;
+
+import jakarta.transaction.Transactional;
 
 @Service
 public class RecetaService {
@@ -18,12 +22,17 @@ public class RecetaService {
     private RecetaRepository recetaRepository;
     private UsuarioRepository usuarioRepository;
     private RankingRepository rankingRepository;
+    private ComentarioRepository comentarioRepository;
+    private PuntuacionRecetaRepository puntuacionRecetaRepository;
 
     public RecetaService(RecetaRepository recetaRepository, UsuarioRepository usuarioRepository,
-            RankingRepository rankingRepository) {
+            RankingRepository rankingRepository, ComentarioRepository comentarioRepository,
+            PuntuacionRecetaRepository puntuacionRecetaRepository) {
         this.recetaRepository = recetaRepository;
         this.usuarioRepository = usuarioRepository;
         this.rankingRepository = rankingRepository;
+        this.comentarioRepository = comentarioRepository;
+        this.puntuacionRecetaRepository = puntuacionRecetaRepository;
     }
 
     // devuelve todas las recetas
@@ -64,8 +73,10 @@ public class RecetaService {
         recetaRepository.save(receta);
     }
 
-    // elimina una receta por id
+    @Transactional
     public void eliminar(Long id) {
+        comentarioRepository.deleteByRecetaId(id);
+        puntuacionRecetaRepository.deleteByRecetaId(id);
         recetaRepository.deleteById(id);
     }
 
