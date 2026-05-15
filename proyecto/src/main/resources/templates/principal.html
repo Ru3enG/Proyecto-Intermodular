@@ -45,7 +45,7 @@
                             </thead>
                             <tbody>
                                 <tr th:each="pos, j : ${posiciones}">
-                                    <td th:text="${rangos[j.index]}">1</td>
+                                    <td th:text="${offset + j.count}">1</td>
                                     <td th:text="${pos.usuario.username}">usuario</td>
                                     <td th:text="${pos.puntuacion}">0</td>
                                 </tr>

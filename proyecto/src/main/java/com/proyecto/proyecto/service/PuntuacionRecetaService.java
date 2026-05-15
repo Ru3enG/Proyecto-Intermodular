@@ -1,5 +1,6 @@
 package com.proyecto.proyecto.service;
 
+import java.time.LocalDateTime;
 import java.util.Optional;
 
 import org.springframework.stereotype.Service;
@@ -61,6 +62,7 @@ public class PuntuacionRecetaService {
         if (posicionOpt.isPresent()) {
             Posicion posicion = posicionOpt.get();
             posicion.setPuntuacion(posicion.getPuntuacion() + puntos);
+            posicion.setUltimaActualizacion(LocalDateTime.now());
             posicionRepository.save(posicion);
         }
     }

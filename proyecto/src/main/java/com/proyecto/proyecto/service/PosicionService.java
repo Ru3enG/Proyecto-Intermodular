@@ -26,6 +26,6 @@ public class PosicionService {
     }
 
     public ArrayList<Posicion> getPosiciones(Long rankingId) {
-        return new ArrayList<>(posicionRepository.findByRankingIdOrderByPuntuacionDesc(rankingId));
+        return new ArrayList<>(posicionRepository.findByRankingIdOrderByPuntuacionDescUltimaActualizacionAsc(rankingId));
     }
 }

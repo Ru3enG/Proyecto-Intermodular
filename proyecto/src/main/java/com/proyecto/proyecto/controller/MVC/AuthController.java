@@ -51,18 +51,6 @@ public class AuthController {
         // cojo todas las posiciones del ranking actual
         ArrayList<Posicion> todasLasPosiciones = posicionService.getPosiciones(rankings.get(idx).getId());
 
-        // calculo rangos reales considerando empates (1,2,2,4...)
-        List<Integer> todosLosRangos = new ArrayList<>();
-        int rango = 1;
-        for (int i = 0; i < todasLasPosiciones.size(); i++) {
-            if (i > 0 && todasLasPosiciones.get(i).getPuntuacion().equals(todasLasPosiciones.get(i - 1).getPuntuacion())) {
-                todosLosRangos.add(todosLosRangos.get(i - 1));
-            } else {
-                todosLosRangos.add(rango);
-            }
-            rango++;
-        }
-
         // paginacion de 20 en 20
         int tamanioPagina = 20;
         int totalPaginas = (int) Math.ceil((double) todasLasPosiciones.size() / tamanioPagina);
@@ -74,13 +62,10 @@ public class AuthController {
         int desde = pagina * tamanioPagina;
         int hasta = Math.min(desde + tamanioPagina, todasLasPosiciones.size());
 
-        // sublista de posiciones y rangos para la pagina actual
         ArrayList<Posicion> posicionesPagina = new ArrayList<>(todasLasPosiciones.subList(desde, hasta));
-        List<Integer> rangosPagina = new ArrayList<>(todosLosRangos.subList(desde, hasta));
 
         model.addAttribute("rankings", rankings);
         model.addAttribute("posiciones", posicionesPagina);
-        model.addAttribute("rangos", rangosPagina);
         model.addAttribute("indiceActual", idx);
         model.addAttribute("indiceAnterior", indiceAnterior);
         model.addAttribute("indiceSiguiente", indiceSiguiente);

@@ -1,5 +1,7 @@
 package com.proyecto.proyecto.model;
 
+import java.time.LocalDateTime;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -29,4 +31,6 @@ public class Posicion {
     private Usuario usuario;
     
     private Integer puntuacion;
+
+    private LocalDateTime ultimaActualizacion;
 }
